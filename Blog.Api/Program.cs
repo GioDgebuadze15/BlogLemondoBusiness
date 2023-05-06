@@ -1,12 +1,14 @@
+using Blog.Database.DatabaseRepository;
 using Blog.Database.EntityFramework;
+using Blog.Services.AppServices.PostAppService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDb"), 
-            b=>b.MigrationsAssembly("Blog.Api")))
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDb"),
+            b => b.MigrationsAssembly("Blog.Api")))
     .AddIdentity<IdentityUser, IdentityRole>(options =>
     {
         options.Password.RequireNonAlphanumeric = false;
@@ -15,7 +17,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services
+    .AddScoped(typeof(IRepository<>), typeof(Repository<>))
+    .AddTransient<IPostService, PostService>();
+
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
