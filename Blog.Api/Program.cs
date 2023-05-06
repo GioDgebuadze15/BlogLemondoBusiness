@@ -1,6 +1,10 @@
+using Blog.Data.Forms;
+using Blog.Data.Forms.Validation;
 using Blog.Database.DatabaseRepository;
 using Blog.Database.EntityFramework;
 using Blog.Services.AppServices.PostAppService;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +26,14 @@ builder.Services
     .AddTransient<IPostService, PostService>();
 
 builder.Services.AddControllers();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblies(new[]
+{
+    typeof(CreatePostFormValidation).Assembly,
+    typeof(UpdatePostFormValidation).Assembly
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
