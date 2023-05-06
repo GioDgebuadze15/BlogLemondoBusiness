@@ -1,6 +1,7 @@
 bin/
 obj/
 .idea/
+Blog.Api/Migrations
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
