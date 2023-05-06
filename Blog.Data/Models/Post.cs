@@ -6,5 +6,5 @@ public class Post : BaseModel<int>
 {
     [Required] public string Title { get; set; }
     [Required] public string Body { get; set; }
-    [Required] public DateTime PublishDate { get; set; }
+    [Required] public DateTime DateOfPublish { get; set; }
 }
