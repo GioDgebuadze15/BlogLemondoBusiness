@@ -8,9 +8,9 @@ public interface IPostService
 {
     IEnumerable<Post> GetAllPosts();
     IEnumerable<Post> GetPostsByPublishDate(DateTime dateOfPublish);
+    IEnumerable<Post> GetPostsByPage(int page, int pageSize);
     PostResponse GetPostById(int id);
     Task<PostResponse> CreatePost(CreatePostForm createPostForm);
     Task<PostResponse> UpdatePost(UpdatePostForm updatePostForm);
     Task<PostResponse> DeletePost(int id);
-
 }

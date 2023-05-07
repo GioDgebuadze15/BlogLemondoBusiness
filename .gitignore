@@ -2,6 +2,7 @@ bin/
 obj/
 .idea/
 Blog.Api/Migrations
+Blog.Api/key
 /packages/
 riderModule.iml
 /_ReSharper.Caches/

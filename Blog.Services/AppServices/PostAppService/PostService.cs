@@ -23,7 +23,10 @@ public class PostService : IPostService
         => _ctx.GetAll();
 
     public IEnumerable<Post> GetPostsByPublishDate(DateTime dateOfPublish)
-        => _ctx.GetAll().Where(x => x.DateOfPublish.Equals(dateOfPublish)).AsEnumerable();
+        => _ctx.GetAll().Where(x => x.DateOfPublish == dateOfPublish).AsEnumerable();
+
+    public IEnumerable<Post> GetPostsByPage(int page, int pageSize)
+        => _ctx.GetAll().Skip((page - 1) * pageSize).Take(pageSize).AsEnumerable();
 
     public PostResponse GetPostById(int id)
     {

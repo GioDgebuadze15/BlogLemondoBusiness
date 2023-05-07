@@ -23,6 +23,10 @@ public class PostController : ApiController
     public IActionResult GetBlogPostsByPublishDate(DateTime dateOfPublish)
         => Ok(_iPostService.GetPostsByPublishDate(dateOfPublish));
 
+    [HttpGet("search-posts")]
+    public IActionResult GetBlogPostsByPage([FromQuery] int page, [FromQuery] int pageSize)
+        => Ok(_iPostService.GetPostsByPage(page, pageSize));
+
     [HttpGet("{id::int}")]
     public IActionResult GetOne(int id)
     {
@@ -36,16 +40,9 @@ public class PostController : ApiController
 
 
     [HttpPost]
-    [Authorize]
+    // [Authorize]
     public async Task<IActionResult> Add([FromBody] CreatePostForm createPostForm)
-    {
-        var response = await _iPostService.CreatePost(createPostForm);
-        return response.StatusCode switch
-        {
-            StatusCodes.Status404NotFound => NotFound(response),
-            _ => Ok(response)
-        };
-    }
+        => Ok(await _iPostService.CreatePost(createPostForm));
 
     [HttpPut]
     [Authorize]
