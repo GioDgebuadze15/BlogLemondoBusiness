@@ -13,4 +13,4 @@ All we are trying to achieve is getting the code on to your computer and making 
 	2. Set the DefaultDb connection string in the appsettings.json file in Blog.Api, to connect to your database in this project.
 	3. Add migrations to create database using enity framework.
 	4. run KeyGenerator and move key file into Blog.Api.
-  5. Run Blog.Tests and ensure everything is working properly.
+  	5. Run Blog.Tests and ensure everything is working properly.
