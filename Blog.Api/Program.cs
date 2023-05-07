@@ -4,6 +4,7 @@ using Blog.Database.EntityFramework;
 using Blog.Services.AppServices;
 using Blog.Services.AppServices.PostAppService;
 using Blog.Services.AppServices.UserAppService;
+using Blog.Services.Middlewares;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,6 +15,13 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddFile(builder.Configuration["File:Path"]);
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDb"),
@@ -119,6 +127,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles();
+
+app.UseMiddleware<LoggingMiddleware>();
+
 app.MapControllers();
 
 app.Run();

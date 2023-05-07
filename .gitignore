@@ -3,6 +3,7 @@ obj/
 .idea/
 Blog.Api/Migrations
 Blog.Api/key
+Blog.Api/Logs
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
