@@ -1,5 +1,6 @@
 ﻿using Blog.Data.Forms;
 using Blog.Services.AppServices.PostAppService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers;
@@ -18,19 +19,55 @@ public class PostController : ApiController
     public IActionResult GetAll()
         => Ok(_iPostService.GetAllPosts());
 
+    [HttpGet("{dateOfPublish}")]
+    public IActionResult GetBlogPostsByPublishDate(DateTime dateOfPublish)
+        => Ok(_iPostService.GetPostsByPublishDate(dateOfPublish));
+
     [HttpGet("{id::int}")]
     public IActionResult GetOne(int id)
-        => Ok(_iPostService.GetPostById(id));
+    {
+        var response = _iPostService.GetPostById(id);
+        return response.StatusCode switch
+        {
+            StatusCodes.Status404NotFound => NotFound(response),
+            _ => Ok(response)
+        };
+    }
+
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Add([FromBody] CreatePostForm createPostForm)
-        => Ok(await _iPostService.CreatePost(createPostForm));
+    {
+        var response = await _iPostService.CreatePost(createPostForm);
+        return response.StatusCode switch
+        {
+            StatusCodes.Status404NotFound => NotFound(response),
+            _ => Ok(response)
+        };
+    }
 
     [HttpPut]
+    [Authorize]
     public async Task<IActionResult> Update([FromBody] UpdatePostForm updatePostForm)
-        => Ok(await _iPostService.UpdatePost(updatePostForm));
+    {
+        var response = await _iPostService.UpdatePost(updatePostForm);
+        return response.StatusCode switch
+        {
+            StatusCodes.Status404NotFound => NotFound(response),
+            _ => Ok(response)
+        };
+    }
 
     [HttpDelete("{id::int}")]
+    [Authorize]
     public async Task<IActionResult> Delete(int id)
-        => Ok(await _iPostService.DeletePost(id));
+    {
+        var response = await _iPostService.DeletePost(id);
+        return response.StatusCode switch
+        {
+            StatusCodes.Status404NotFound => NotFound(response),
+            _ => Ok(response)
+        };
+    }
 }

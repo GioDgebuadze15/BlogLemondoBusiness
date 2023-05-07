@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Database", "Blog.Datab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Services", "Blog.Services\Blog.Services.csproj", "{D8C5E34D-551A-4DC6-859A-28D1DE924C43}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.KeyGenerator", "Blog.KeyGenerator\Blog.KeyGenerator.csproj", "{04A891D9-AFA3-40D2-A4D9-35DDFBFAEA3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{D8C5E34D-551A-4DC6-859A-28D1DE924C43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8C5E34D-551A-4DC6-859A-28D1DE924C43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8C5E34D-551A-4DC6-859A-28D1DE924C43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04A891D9-AFA3-40D2-A4D9-35DDFBFAEA3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A891D9-AFA3-40D2-A4D9-35DDFBFAEA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04A891D9-AFA3-40D2-A4D9-35DDFBFAEA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04A891D9-AFA3-40D2-A4D9-35DDFBFAEA3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

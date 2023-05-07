@@ -1,6 +1,9 @@
 ﻿using Blog.Data.Forms;
 using Blog.Data.Models;
+using Blog.Data.Responses;
+using Blog.Data.ViewModels;
 using Blog.Database.DatabaseRepository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Blog.Services.AppServices.PostAppService;
@@ -19,21 +22,25 @@ public class PostService : IPostService
     public IEnumerable<Post> GetAllPosts()
         => _ctx.GetAll();
 
-    public Post GetPostById(int id)
+    public IEnumerable<Post> GetPostsByPublishDate(DateTime dateOfPublish)
+        => _ctx.GetAll().Where(x => x.DateOfPublish.Equals(dateOfPublish)).AsEnumerable();
+
+    public PostResponse GetPostById(int id)
     {
         try
         {
-            return _ctx.GetById(id).FirstOrDefault()
-                   ?? throw new InvalidOperationException($"Entity with id {id} was not found.");
+            var post = _ctx.GetById(id).FirstOrDefault()
+                       ?? throw new InvalidOperationException($"Entity with id {id} was not found.");
+            return new(StatusCodes.Status200OK, null, PostViewModels.Default.Compile().Invoke(post));
         }
         catch (InvalidOperationException e)
         {
             _logger.LogError(e, e.Message);
-            return new Post();
+            return new(StatusCodes.Status404NotFound, e.Message, null);
         }
     }
 
-    public async Task<Post> CreatePost(CreatePostForm createPostForm)
+    public async Task<PostResponse> CreatePost(CreatePostForm createPostForm)
     {
         var post = new Post
         {
@@ -42,10 +49,10 @@ public class PostService : IPostService
             DateOfPublish = createPostForm.DateOfPublish
         };
         await _ctx.Add(post);
-        return post;
+        return new(StatusCodes.Status200OK, null, PostViewModels.Default.Compile().Invoke(post));
     }
 
-    public async Task<Post?> UpdatePost(UpdatePostForm updatePostForm)
+    public async Task<PostResponse> UpdatePost(UpdatePostForm updatePostForm)
     {
         try
         {
@@ -57,16 +64,16 @@ public class PostService : IPostService
             post.DateOfPublish = updatePostForm.DateOfPublish;
 
             await _ctx.Update(post);
-            return post;
+            return new(StatusCodes.Status200OK, null, PostViewModels.Default.Compile().Invoke(post));
         }
         catch (InvalidOperationException e)
         {
             _logger.LogError(e, e.Message);
-            return null;
+            return new(StatusCodes.Status404NotFound, e.Message, null);
         }
     }
 
-    public async Task<Post?> DeletePost(int id)
+    public async Task<PostResponse> DeletePost(int id)
     {
         try
         {
@@ -74,12 +81,12 @@ public class PostService : IPostService
             if (post is null) throw new InvalidOperationException("Cannot find post to delete.");
 
             await _ctx.Delete(post);
-            return post;
+            return new(StatusCodes.Status200OK, null, PostViewModels.Default.Compile().Invoke(post));
         }
         catch (InvalidOperationException e)
         {
             _logger.LogError(e, e.Message);
-            return null;
+            return new(StatusCodes.Status404NotFound, e.Message, null);
         }
     }
 }
