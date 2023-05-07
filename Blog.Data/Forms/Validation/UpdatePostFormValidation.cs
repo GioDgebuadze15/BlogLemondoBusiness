@@ -21,6 +21,6 @@ public class UpdatePostFormValidation : AbstractValidator<UpdatePostForm>
             .NotEmpty()
             .WithMessage("DateOfPublish is required!")
             .Must(x => x > DateTime.MinValue && x < DateTime.MaxValue)
-            .WithMessage("MyDateTimeProperty must be a valid date and time.");
+            .WithMessage("DateTimeProperty must be a valid date and time.");
     }
 }
