@@ -1,0 +1,328 @@
+FORMAT: 1A
+HOST: https://localhost:7046/api/
+
+# Blog Lemondo Business
+
+Blog is a simple API allowing clients to view posts and create posts.
+
+## Post Collection [/posts]
+
+### List All Posts [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "title": "Post Title 1",
+                "body": "Post Body 1",
+                "dateOfPublish": "2023-05-07T00:00:00"
+            },
+            {
+                "id": 2,
+                "title": "Post Title 2",
+                "body": "Post Body 2",
+                "dateOfPublish": "2023-05-07T00:00:00"
+            }
+        ]
+
+## Post By Id [/posts/1]
+
+### Get Post By Id [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "title": "Post Title 1",
+                "body": "Post Body 1",
+                "dateOfPublish": "2023-05-07T00:00:00"
+            }
+        ]
+        
+## Post By Date Of Publish [/posts/2023-05-7]
+
+### Get Post By Date Of Publish [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "title": "Post Title 1",
+                "body": "Post Body 1",
+                "dateOfPublish": "2023-05-07T00:00:00"
+            }
+        ]
+        
+## Post By Pagination [/posts/search-posts?page=1&pageSize=2]
+
+### Get Post By PageSize [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "title": "Post Title 1",
+                "body": "Post Body 1",
+                "dateOfPublish": "2023-05-07T00:00:00"
+            },
+            {
+                "id": 2,
+                "title": "Post Title 2",
+                "body": "Post Body 2",
+                "dateOfPublish": "2023-05-07T00:00:00"
+            }
+        ]
+
+
+
+## Create Post [/posts]
+### Create a New Post [POST]
+
+You may create your own post using this action. It takes a JSON
+object containing a post.
+
++ Request (application/json)
+
+        {
+            "title": "string",
+            "body": "string",
+            "dateOfPublish": "2023-05-07T11:02:27.524Z"
+        }   
+
++ Response 200 ()
+
+    + Headers
+
+            content-type: application/json; charset=utf-8 
+            date: Sun,07 May 2023 11:06:46 GMT 
+            server: Kestrel 
+            'Authorization: Bearer {token_here}'
+
+    + Body
+
+        {
+            "statusCode": 200,
+            "error": null,
+            "data": {
+                "id": 3,
+                "title": "string",
+                "body": "string",
+                "dateOfPublish": "2023-05-07T11:02:27.524Z"
+                }
+        }
+            
++ Response 401 ()
+
+    + Headers
+
+            content-length: 0 
+            date: Sun,07 May 2023 11:10:24 GMT 
+            server: Kestrel 
+            www-authenticate: Bearer 
+
+## Update Post [/posts]
+### Update a Post [PUT]
+
+You may update your own post using this action. It takes a JSON
+object containing a post.
+
++ Request (application/json)
+
+        {
+            "id": 3,
+            "title": "string",
+            "body": "string",
+            "dateOfPublish": "2023-05-07T11:18:33.350Z"
+        }   
+
++ Response 200 ()
+
+    + Headers
+
+            content-type: application/json; charset=utf-8 
+            date: Sun,07 May 2023 11:06:46 GMT 
+            server: Kestrel 
+            'Authorization: Bearer {token_here}'
+
+    + Body
+
+        {
+            "statusCode": 200,
+            "error": null,
+            "data": {
+                "id": 3,
+                "title": "string",
+                "body": "string",
+                "dateOfPublish": "2023-05-07T11:18:33.35Z"
+            }
+        }
+            
++ Response 401 ()
+
+    + Headers
+
+            content-length: 0 
+            date: Sun,07 May 2023 11:10:24 GMT 
+            server: Kestrel 
+            www-authenticate: Bearer 
+            
++ Response 404 ()
+
+    + Body
+
+            {
+                 "statusCode": 404,
+                 "error": "Entity with id 3 was not found.",
+                 "data": null
+            }
+
+## Delete Post [/posts/3]
+### Delete a Post [DELETE]
+
+You may delete your own post using this action. It takes a JSON
+object containing a post.
+
++ Response 200 ()
+
+    + Headers
+
+            content-type: application/json; charset=utf-8 
+            date: Sun,07 May 2023 11:06:46 GMT 
+            server: Kestrel 
+            'Authorization: Bearer {token_here}'
+
+    + Body
+
+        {
+            "statusCode": 200,
+            "error": null,
+            "data": {
+                "id": 3,
+                "title": "string",
+                "body": "string",
+                "dateOfPublish": "2023-05-07T11:18:33.35"
+                }
+        }
+            
++ Response 401 ()
+
+    + Headers
+
+            content-length: 0 
+            date: Sun,07 May 2023 11:10:24 GMT 
+            server: Kestrel 
+            www-authenticate: Bearer 
+            
++ Response 404 ()
+
+    + Body
+
+            {
+                "statusCode": 404,
+                "error": "Entity with id 3 was not found.",
+                "data": null
+            }
+    
+
+## Create User [/user/SignUp]
+### Update a Post [POST]
+
+You may create user using this action. It takes a JSON
+object containing a user.
+
++ Request (application/json)
+
+        {
+            "username": "string",
+            "password": "stringG123",
+            "confirmPassword": "stringG123"
+        } 
+
++ Response 200 ()
+
+    + Headers
+            content-type: application/json; charset=utf-8 
+            date: Sun,07 May 2023 11:06:46 GMT 
+            server: Kestrel 
+
+    + Body
+
+        {
+            "statusCode": 200,
+            "error": null,
+            "token": "token_here"
+        }
+        
++ Response 400 ()
+
+    + Headers
+            content-type: application/json; charset=utf-8 
+            date: Sun,07 May 2023 11:06:46 GMT 
+            server: Kestrel 
+        
+    + Body 
+        {
+            "statusCode": 400,
+            "error": "User already exists!",
+            "token": null
+        }
+
+## Create User [/user/SignIn]
+### Update a Post [POST]
+
+You may login using this action. It takes a JSON
+object containing a user.
+
++ Request (application/json)
+
+        {
+            "username": "string",
+            "password": "stringG123",
+            "confirmPassword": "stringG123"
+        } 
+
++ Response 200 ()
+
+    + Headers
+            content-type: application/json; charset=utf-8 
+            date: Sun,07 May 2023 11:06:46 GMT 
+            server: Kestrel 
+
+    + Body
+
+        {
+            "statusCode": 200,
+            "error": null,
+            "token": "token_here"
+        }
+        
++ Response 400 ()
+
+    + Headers
+            content-type: application/json; charset=utf-8 
+            date: Sun,07 May 2023 11:06:46 GMT 
+            server: Kestrel 
+        
+    + Body 
+        {
+            "statusCode": 400,
+            "error": "Incorrect data!",
+            "token": null
+        }
+
++ Response 404 ()
+    + Headers
+            content-type: application/json; charset=utf-8 
+            date: Sun,07 May 2023 11:06:46 GMT 
+            server: Kestrel 
+            
+    + Body
+        {
+            "statusCode": 404,
+            "error": "User doesn't exists!",
+            "token": null
+        }
