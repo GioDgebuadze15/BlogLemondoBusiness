@@ -48,7 +48,7 @@ public class PostControllerTests
         // Arrange
         var targetDate = new DateTime(2002, 05, 05);
 
-        var expectedPosts = _allPosts.Where(post => post.DateOfPublish == targetDate).ToList();
+        var expectedPosts = _allPosts.Where(post => post.DateOfPublish.Date == targetDate.Date).ToList();
 
         _mockPostService.Setup(service => service.GetPostsByPublishDate(targetDate))
             .Returns(expectedPosts);

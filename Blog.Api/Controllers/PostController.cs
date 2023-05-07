@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers;
 
-[Route("api/post")]
+[Route("api/posts")]
 public class PostController : ApiController
 {
     private readonly IPostService _iPostService;
@@ -40,7 +40,7 @@ public class PostController : ApiController
 
 
     [HttpPost]
-    // [Authorize]
+    [Authorize]
     public async Task<IActionResult> Add([FromBody] CreatePostForm createPostForm)
         => Ok(await _iPostService.CreatePost(createPostForm));
 

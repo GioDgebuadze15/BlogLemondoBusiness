@@ -26,9 +26,8 @@ public class UserService : IUserService
         var user = new IdentityUser
         {
             UserName = createUserForm.Username,
-            PasswordHash = createUserForm.Password
         };
-        var result = await _userManager.CreateAsync(user);
+        var result = await _userManager.CreateAsync(user,createUserForm.Password);
         if (!result.Succeeded)
             return new(StatusCodes.Status400BadRequest, "Couldn't create user!", null);
 
